@@ -25,6 +25,7 @@ namespace Pizza
 		public double CalculatePrice()
 		{
 			double vat = 1.25;
+			double deliveryFee = 10;
 			double calculatedPrice = 0;
 
 			foreach (Pizza pizza in PizzaRegister.Pizzas)
@@ -39,7 +40,18 @@ namespace Pizza
 				calculatedPrice *= (1 - student.Discount);
 			}
 
-			return Math.Round(calculatedPrice, 2);
+			// Apply discount and free delivery if the costumer is elderly
+			if (Costumer is Elderly elderly)
+			{
+				calculatedPrice *= (1 - elderly.Discount);
+
+				if (elderly.FreeDelivery)
+				{
+					deliveryFee = 0;
+				}
+			}
+
+			return Math.Round(calculatedPrice + deliveryFee, 2);
 		}
 
 		public override string ToString()
