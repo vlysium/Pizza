@@ -33,6 +33,12 @@ namespace Pizza
 			}
 			calculatedPrice *= vat;
 
+			// Apply discount if the costumer is a student
+			if (Costumer is Student student)
+			{
+				calculatedPrice *= (1 - student.Discount);
+			}
+
 			return Math.Round(calculatedPrice, 2);
 		}
 
